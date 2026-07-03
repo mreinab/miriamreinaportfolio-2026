@@ -1,0 +1,30 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SitePage from '../components/SitePage.astro';
+
+const projects = (await getCollection('webdev')).sort(
+  (a: CollectionEntry<'webdev'>, b: CollectionEntry<'webdev'>) => a.data.order - b.data.order
+);
+---
+
+<Layout title="Desarrollo" chrome={false} favicon="/favicon-webdev.png" fonts={true}>
+  <SitePage active="webdev">
+    <ul>
+      {
+        projects.map((entry) => (
+          <li>
+            <ProjectCard
+              collection="webdev"
+              slug={entry.id}
+              title={entry.data.title}
+              cover={entry.data.cover}
+              tags={entry.data.tags}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </SitePage>
+</Layout>

@@ -1,0 +1,31 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SitePage from '../components/SitePage.astro';
+
+const projects = (await getCollection('fashion')).sort(
+  (a: CollectionEntry<'fashion'>, b: CollectionEntry<'fashion'>) => a.data.order - b.data.order
+);
+---
+
+<Layout title="Moda" chrome={false} favicon="/favicon-fashion.png" fonts={true}>
+  <h1 class="hidden">Styling portfolio</h1>
+  <SitePage active="fashion">
+    <ul>
+      {
+        projects.map((entry: any) => (
+          <li>
+            <ProjectCard
+              collection="fashion"
+              slug={entry.id}
+              title={entry.data.title}
+              cover={entry.data.cover}
+              tags={entry.data.tags}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </SitePage>
+</Layout>

@@ -1,0 +1,59 @@
+---
+// src/components/DesktopSideNav.astro
+// Columna izquierda fija, solo visible en desktop (>= 900px). En mobile
+// la navegación la cubre SiteNav.astro.
+import LandingVenn from './LandingVenn.astro';
+
+interface Props {
+  active?: 'graphicdesign' | 'fashion' | 'webdev';
+}
+
+const { active } = Astro.props;
+---
+<nav class="desktop-side-nav" aria-label="Navegación principal">
+  <a class="desktop-side-nav-link text-micro" href="/">Home</a>
+  <LandingVenn active={active} />
+  <a class="desktop-side-nav-link text-micro" href="/about">About Miriam</a>
+</nav>
+
+<style>
+  .desktop-side-nav {
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    .desktop-side-nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      inset: 0 50% 0 0;
+      padding: 2rem 0;
+      background: var(--color-paper);
+      /* Pinta también los óvalos/botones de LandingVenn del mismo color
+         (ver fallback var(--color-paper) en LandingVenn.astro para index). */
+      --landing-venn-color: var(--color-ink);
+      /* El landing-venn de dentro ocupa el 100% del panel (no el 66.6667%
+         que usa por defecto en index.astro), con 16px de padding lateral. */
+      --landing-venn-width: 100%;
+      --landing-venn-padding-x: 16px;
+      font-family: var(--font-sans);
+      text-transform: uppercase;
+      z-index: 10;
+    }
+  }
+
+  .desktop-side-nav-link {
+    color: var(--color-ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* Pantallas muy grandes: la columna izquierda pasa de 50% a 60%. */
+  @media (min-width: 2560px) {
+    .desktop-side-nav {
+      inset: 0 40% 0 0;
+    }
+  }
+</style>

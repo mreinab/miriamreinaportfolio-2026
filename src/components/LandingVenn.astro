@@ -1,0 +1,400 @@
+---
+// src/components/LandingVenn.astro
+// Menú venn (Web development / Fashion / Graphic design) usado en el
+// landing (index.astro) y reutilizado tal cual en DesktopSideNav.astro.
+interface Props {
+  active?: 'graphicdesign' | 'fashion' | 'webdev';
+}
+
+const { active } = Astro.props;
+---
+<div class="w-full">
+  <nav class="landing-venn mx-auto" aria-label="Categorías">
+    <svg class="landing-venn-circle landing-venn-circle--left" aria-hidden="true">
+      <ellipse />
+    </svg>
+    <svg class="landing-venn-circle landing-venn-circle--right" aria-hidden="true">
+      <ellipse />
+    </svg>
+
+    <a
+      class="landing-nav-btn landing-nav-btn--design"
+      href="/graphicdesign"
+      aria-current={active === 'graphicdesign' ? 'page' : undefined}
+    >
+      <p class="landing-text-bg text-micro">Graphic design</p>
+      <svg class="landing-nav-btn-outline" aria-hidden="true">
+        <ellipse />
+      </svg>
+    </a>
+    <a
+      class="landing-nav-btn landing-nav-btn--fashion"
+      href="/fashion"
+      aria-current={active === 'fashion' ? 'page' : undefined}
+    >
+      <p class="landing-text-bg text-micro">Fashion</p>
+      <svg class="landing-nav-btn-outline" aria-hidden="true">
+        <ellipse />
+      </svg>
+    </a>
+    <a
+      class="landing-nav-btn landing-nav-btn--web"
+      href="/webdev"
+      aria-current={active === 'webdev' ? 'page' : undefined}
+    >
+      <p class="landing-text-bg text-micro">Web development</p>
+      <svg class="landing-nav-btn-outline" aria-hidden="true">
+        <ellipse />
+      </svg>
+    </a>
+  </nav>
+</div>
+
+<style>
+  .landing-text-bg {
+    width: fit-content;
+    padding: 0.025rem 0.025rem;
+  }
+
+  .landing-venn {
+    --circle-size: 120px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    height: 220px;
+    /* --landing-venn-width/--landing-venn-padding-x: sin definir por
+       defecto (usa el fallback de abajo, igual que antes con Tailwind);
+       DesktopSideNav.astro los redefine a 100% / 16px. */
+    width: var(--landing-venn-width, calc(100% - 16px));
+    padding: 0 var(--landing-venn-padding-x, 0);
+  }
+
+  @media (max-width: 768px) {
+    .landing-venn {
+      --circle-size: 160px;
+      height: 120px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .landing-venn {
+      width: var(--landing-venn-width, 66.6667%);
+    }
+  }
+
+  /* ---------- Óvalos grandes (animados al cargar, se quedan dibujados) ---------- */
+
+  .landing-venn-circle {
+    width: 100%;
+    height: var(--circle-size);
+    grid-row: 1;
+    overflow: visible;
+  }
+
+  .landing-venn-circle--left {
+    grid-column: 1 / 3;
+  }
+
+  .landing-venn-circle--right {
+    grid-column: 2 / 4;
+  }
+
+  .landing-venn-circle ellipse {
+    fill: none;
+    stroke: var(--landing-venn-color, var(--color-paper));
+    stroke-width: 1px;
+    opacity: 0;
+  }
+
+  .landing-venn-circle--right ellipse {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: rotate(180deg);
+  }
+
+  .landing-venn-circle ellipse.is-ready {
+    opacity: 1;
+    animation: draw-venn 1.0s linear forwards;
+  }
+
+  @keyframes draw-venn {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* ---------- Botones: sin transition/animation en CSS, todo lo controla JS ---------- */
+
+  .landing-nav-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% + 1px);
+    height: calc(var(--circle-size) / 2);
+    padding: 4px 12px;
+    border: none;
+    color: var(--landing-venn-color, var(--color-paper));
+    white-space: normal;
+    text-align: center;
+    grid-row: 1;
+    justify-self: center;
+  }
+
+  .landing-nav-btn--web {
+    grid-column: 1;
+    transform: translateX(0.5px);
+  }
+
+  .landing-nav-btn--fashion {
+    transform: translateX(0px);
+    grid-column: 2;
+  }
+
+  .landing-nav-btn--design {
+    transform: translateX(-0.5px);
+    grid-column: 3;
+  }
+
+  .landing-nav-btn-outline {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .landing-nav-btn-outline ellipse {
+    fill: none;
+    stroke: var(--landing-venn-color, var(--color-paper));
+    stroke-width: 1px;
+    /* Sin transition ni animation aquí: el valor de stroke-dashoffset
+       lo escribe JS frame a frame, así que no hay ninguna regla CSS
+       compitiendo por esta propiedad. */
+  }
+</style>
+
+<script>
+  function fitEllipseToSvg(svg: SVGSVGElement, strokeWidth: number) {
+    const { width, height } = svg.getBoundingClientRect();
+    // Oculto vía CSS (display: none, p.ej. DesktopSideNav en mobile): no hay
+    // caja real que medir. Salir sin tocar nada evita fijar un rx/ry
+    // negativo inválido.
+    if (width === 0 || height === 0) return null;
+
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+    const ellipse = svg.querySelector('ellipse');
+    if (!ellipse) return null;
+
+    ellipse.setAttribute('cx', `${width / 2}`);
+    ellipse.setAttribute('cy', `${height / 2}`);
+    ellipse.setAttribute('rx', `${width / 2 - strokeWidth}`);
+    ellipse.setAttribute('ry', `${height / 2 - strokeWidth}`);
+
+    return ellipse;
+  }
+
+  function initVennDraw() {
+    const svgs = document.querySelectorAll<SVGSVGElement>('.landing-venn-circle');
+    const strokeWidth = 1;
+
+    svgs.forEach((svg) => fitEllipseToSvg(svg, strokeWidth));
+
+    const ellipses = document.querySelectorAll<SVGGeometryElement>('.landing-venn-circle ellipse');
+
+    ellipses.forEach((el) => {
+      const length = Math.ceil(el.getTotalLength());
+      el.style.strokeDasharray = `${length}`;
+      el.style.strokeDashoffset = `${length}`;
+    });
+
+    requestAnimationFrame(() => {
+      ellipses.forEach((el) => el.classList.add('is-ready'));
+    });
+  }
+
+  // ---------- Motor de animación manual para los botones ----------
+  // Controla stroke-dashoffset frame a frame, sin depender de CSS
+  // transition/animation, para poder interrumpir y encadenar fases
+  // (dibujar → borrar) siempre en la misma dirección, sin saltos.
+
+  interface DrawState {
+    length: number;
+    current: number;
+    rafId: number | null;
+  }
+
+  function setOffset(el: SVGGeometryElement, value: number, state: DrawState) {
+    state.current = value;
+    el.style.strokeDashoffset = `${value}`;
+  }
+
+  function animateTo(
+    el: SVGGeometryElement,
+    state: DrawState,
+    target: number,
+    duration: number,
+    onDone?: () => void
+  ) {
+    if (state.rafId !== null) {
+      cancelAnimationFrame(state.rafId);
+      state.rafId = null;
+    }
+
+    const from = state.current;
+
+    if (from === target || duration <= 0) {
+      setOffset(el, target, state);
+      onDone?.();
+      return;
+    }
+
+    const start = performance.now();
+
+    function frame(now: number) {
+      const t = Math.min((now - start) / duration, 1);
+      const value = from + (target - from) * t;
+      setOffset(el, value, state);
+
+      if (t < 1) {
+        state.rafId = requestAnimationFrame(frame);
+      } else {
+        state.rafId = null;
+        onDone?.();
+      }
+    }
+
+    state.rafId = requestAnimationFrame(frame);
+  }
+
+  const DRAW_MS = 500; // duración de "dibujar" el trazo
+  const ERASE_MS = 500; // duración de "borrar" siguiendo el mismo camino
+  const STROKE_WIDTH = 1;
+
+  interface ButtonOutline {
+    svg: SVGSVGElement;
+    ellipse: SVGGeometryElement;
+    state: DrawState;
+    isActive: boolean;
+  }
+
+  // Se rellena en initButtonOutlines() y lo reutiliza syncButtonOutlines()
+  // para poder corregir el tamaño real sin duplicar listeners ni volver a
+  // lanzar la animación de intro.
+  const buttonOutlines: ButtonOutline[] = [];
+
+  function initButtonOutlines() {
+    const buttons = document.querySelectorAll<HTMLAnchorElement>('.landing-nav-btn');
+    // En touch/mobile no hay hover real: evita que el "hover" se quede
+    // pintado tras un tap (mouseenter simulado sin mouseleave posterior).
+    const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    buttons.forEach((button) => {
+      const svg = button.querySelector<SVGSVGElement>('.landing-nav-btn-outline');
+      if (!svg) return;
+
+      const isActive = button.getAttribute('aria-current') === 'page';
+
+      const ellipse = fitEllipseToSvg(svg, STROKE_WIDTH) as SVGGeometryElement | null;
+      if (!ellipse) return;
+
+      const length = Math.ceil(ellipse.getTotalLength());
+      ellipse.setAttribute('stroke-dasharray', `${length}`);
+
+      const state: DrawState = { length, current: length, rafId: null };
+      setOffset(ellipse, length, state); // arranca oculto
+      buttonOutlines.push({ svg, ellipse, state, isActive });
+
+      // --- Intro al cargar: dibuja y, si no es la página activa, borra por
+      // el mismo camino. La página activa se queda dibujada de forma
+      // permanente, no solo al hacer hover. ---
+      requestAnimationFrame(() => {
+        if (isActive) {
+          animateTo(ellipse, state, 0, DRAW_MS, () => syncButtonOutlines());
+          return;
+        }
+
+        animateTo(ellipse, state, 0, DRAW_MS, () => {
+          animateTo(ellipse, state, -length, ERASE_MS, () => {
+            // -length y +length son visualmente idénticos (el patrón de
+            // guiones se repite cada 2×length), así que este reseteo
+            // no produce ningún salto visible.
+            setOffset(ellipse, length, state);
+            // El botón puede haber cambiado de tamaño real (fuentes,
+            // imágenes, barra de direcciones móvil) mientras se reproducía
+            // la intro: al terminar, uno de tantos buenos momentos para
+            // recalcular su geometría con el layout ya asentado.
+            syncButtonOutlines();
+          });
+        });
+      });
+
+      // --- Mismo mecanismo en cada hover (solo en dispositivos con hover
+      // real y solo si no es ya la página activa, que se queda siempre
+      // dibujada) ---
+      if (supportsHover && !isActive) {
+        button.addEventListener('mouseenter', () => {
+          // Si venía borrándose (valor negativo o intermedio), seguimos
+          // desde donde esté realmente, no reiniciamos de golpe.
+          animateTo(ellipse, state, 0, DRAW_MS);
+        });
+
+        button.addEventListener('mouseleave', () => {
+          // Desde el punto actual, seguimos avanzando en la MISMA dirección
+          // hasta completar el borrado (offset actual → offset actual - length).
+          const target = state.current - length;
+          animateTo(ellipse, state, target, ERASE_MS, () => {
+            setOffset(ellipse, length, state); // reseteo silencioso, sin salto visual
+          });
+        });
+      }
+    });
+  }
+
+  // Recalcula viewBox/rx/ry/dasharray de cada botón contra su tamaño real
+  // actual. Solo toca los que están en reposo (rafId === null): si hay una
+  // animación de dibujado/borrado en curso la deja terminar tal cual, para
+  // no producir un salto visual a mitad de trazo.
+  function syncButtonOutlines() {
+    buttonOutlines.forEach(({ svg, ellipse, state, isActive }) => {
+      if (state.rafId !== null) return;
+
+      fitEllipseToSvg(svg, STROKE_WIDTH);
+      const length = Math.ceil(ellipse.getTotalLength());
+      if (length === state.length) return;
+
+      ellipse.setAttribute('stroke-dasharray', `${length}`);
+      state.length = length;
+      // En reposo: la página activa se queda dibujada (0), el resto oculto (length).
+      setOffset(ellipse, isActive ? 0 : length, state);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initVennDraw();
+    initButtonOutlines();
+  });
+
+  // ---------- Resincroniza el tamaño del venn y de los botones tras el layout inicial ----------
+  // initVennDraw() es seguro de repetir: fitEllipseToSvg vuelve a medir el
+  // box real y solo actualiza stroke-dasharray (stroke-dashoffset ya lo
+  // mantiene fijo a 0 la animación "forwards", así que no se reinicia el
+  // dibujo). Esto corrige el desajuste que aparece cuando el viewBox se
+  // calculó antes de que la barra de direcciones móvil, las fuentes o las
+  // imágenes terminaran de asentar el layout real; syncButtonOutlines()
+  // hace lo equivalente para el trazo de los botones.
+  function scheduleGeometrySync() {
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        initVennDraw();
+        syncButtonOutlines();
+      })
+    );
+  }
+
+  window.addEventListener('load', scheduleGeometrySync);
+  document.fonts?.ready.then(scheduleGeometrySync);
+  window.addEventListener('resize', scheduleGeometrySync);
+</script>

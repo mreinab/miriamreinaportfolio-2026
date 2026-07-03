@@ -1,0 +1,529 @@
+---
+// src/components/SiteNav.astro
+interface Props {
+  active?: 'graphicdesign' | 'fashion' | 'webdev';
+}
+
+const { active } = Astro.props;
+---
+<nav class="site-nav" aria-label="Navegación principal">
+  <svg class="site-nav-outer" aria-hidden="true">
+    <ellipse />
+  </svg>
+
+  <a class="site-nav-link site-nav-link--top" href="/about">Miriam</a>
+
+  <div class="site-nav-venn">
+    <svg class="site-nav-venn-circle site-nav-venn-circle--left" aria-hidden="true">
+      <ellipse />
+    </svg>
+    <svg class="site-nav-venn-circle site-nav-venn-circle--right" aria-hidden="true">
+      <ellipse />
+    </svg>
+
+    <a
+      class="site-nav-venn-link site-nav-venn-link--web"
+      href="/webdev"
+      aria-current={active === 'webdev' ? 'page' : undefined}
+    >
+      Web development
+      <svg class="site-nav-venn-link-outline" aria-hidden="true">
+        <ellipse />
+      </svg>
+    </a>
+    <a
+      class="site-nav-venn-link site-nav-venn-link--fashion"
+      href="/fashion"
+      aria-current={active === 'fashion' ? 'page' : undefined}
+    >
+      Fashion
+      <svg class="site-nav-venn-link-outline" aria-hidden="true">
+        <ellipse />
+      </svg>
+    </a>
+    <a
+      class="site-nav-venn-link site-nav-venn-link--design"
+      href="/graphicdesign"
+      aria-current={active === 'graphicdesign' ? 'page' : undefined}
+    >
+      Graphic design
+      <svg class="site-nav-venn-link-outline" aria-hidden="true">
+        <ellipse />
+      </svg>
+    </a>
+  </div>
+
+  <a class="site-nav-link site-nav-link--bottom" href="/">Home</a>
+</nav>
+
+<style>
+  .site-nav {
+    --circle-size: 84px; /* 120px - 30% */
+    /* El propio nav (la caja sticky que se colapsa en el flujo) mide la
+       mitad que site-nav-venn-circle, igual que landing-nav-btn mide la
+       mitad que landing-venn-circle. Es una medida "de contabilidad" para
+       el sticky/colapso: todo el contenido visual (Miriam, venn, Contact)
+       se posiciona aparte, contra --outer-height, así que no se ve
+       afectado por este alto tan pequeño. */
+    --nav-height: calc(var(--circle-size) / 2);
+    --outer-height: 180px; /* alto visual del óvalo envolvente */
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    width: 100%;
+    height: var(--nav-height);
+    /* Colapsa el espacio que reserva en el flujo: el contenido siguiente
+       sube y queda debajo del nav, que flota encima gracias al sticky */
+    margin-bottom: calc(-1 * var(--nav-height));
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    color: var(--color-pink);
+    pointer-events: none;
+  }
+
+  /* Solo es la navegación de mobile: en desktop la sustituye DesktopSideNav.astro */
+  @media (min-width: 900px) {
+    .site-nav {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .site-nav {
+      --circle-size: 112px; /* 160px - 30% */
+      width: calc(100% - 8px); /* 100% menos 4px de padding lateral a cada lado */
+      margin-inline: 4px;
+    }
+
+  }
+
+  .site-nav a {
+    pointer-events: auto;
+  }
+
+  /* ---------- Óvalo envolvente: mismo ancho que el venn, alto propio (--outer-height) ---------- */
+
+  .site-nav-outer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 66.666%;
+    height: var(--outer-height);
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .site-nav-outer ellipse {
+    fill: none;
+    stroke: var(--color-pink);
+    stroke-width: 1px;
+    opacity: 0;
+    /* Por defecto el navegador dibuja la elipse derecha → abajo → izquierda
+       → arriba → derecha. El flip vertical invierte el sentido del barrido
+       (ahora sube primero) sin mover el punto de inicio/fin, que sigue
+       siendo el lateral derecho (un flip en Y no mueve el punto cuya y = cy). */
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scaleY(-1);
+  }
+
+  .site-nav-outer ellipse.is-ready {
+    opacity: 1;
+    animation: draw-venn 1s linear forwards;
+  }
+
+  /* ---------- Venn interior: mismo método de grid que .landing-venn ---------- */
+  /* Centrado sobre --outer-height (no sobre el alto, mucho menor, del
+     propio .site-nav), igual que .site-nav-outer. */
+
+  .site-nav-venn {
+    position: absolute;
+    /* calc(--outer-height / 2), no 50%: un % se resolvería contra el alto
+       de .site-nav (la caja sticky, ahora mucho más baja que el venn), no
+       contra el alto visual real. */
+    top: calc(var(--outer-height) / 2);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    /* minmax(0, 1fr), no solo 1fr: si no, el contenido (p.ej. la palabra
+       "DEVELOPMENT", que no puede partirse) fuerza esa columna a crecer
+       más que las otras y descuadra el venn. */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    width: 66.666%;
+  }
+
+  @media (max-width: 768px) {
+    /* En mobile ocupan el 100% del nav (ya inset 4px), no el 66.666% de desktop */
+    .site-nav-outer,
+    .site-nav-venn {
+      width: 100%;
+    }
+  }
+
+  /* ---------- Óvalos (animados al cargar, se quedan dibujados) ---------- */
+
+  .site-nav-venn-circle {
+    width: 100%;
+    height: var(--circle-size);
+    grid-row: 1;
+    overflow: visible;
+  }
+
+  .site-nav-venn-circle--left {
+    grid-column: 1 / 3;
+  }
+
+  .site-nav-venn-circle--right {
+    grid-column: 2 / 4;
+  }
+
+  .site-nav-venn-circle ellipse {
+    fill: none;
+    stroke: var(--color-pink);
+    stroke-width: 1px;
+    opacity: 0;
+  }
+
+  .site-nav-venn-circle--right ellipse {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: rotate(180deg);
+  }
+
+  .site-nav-venn-circle ellipse.is-ready {
+    opacity: 1;
+    animation: draw-venn 1s linear forwards;
+  }
+
+  @keyframes draw-venn {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* ---------- Links del venn: mismo patrón que .landing-nav-btn ---------- */
+
+  .site-nav-venn-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: calc(var(--circle-size) / 2);
+    color: var(--color-pink);
+    text-decoration: none;
+    font-size: var(--text-caption);
+    white-space: normal;
+    text-align: center;
+    padding: 0 4px;
+    grid-row: 1;
+    justify-self: center;
+  }
+
+  .site-nav-venn-link--web {
+    grid-column: 1;
+  }
+
+  .site-nav-venn-link--fashion {
+    grid-column: 2;
+  }
+
+  .site-nav-venn-link--design {
+    grid-column: 3;
+  }
+
+  .site-nav-venn-link-outline {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .site-nav-venn-link-outline ellipse {
+    fill: none;
+    stroke: var(--color-pink);
+    stroke-width: 1px;
+    /* Sin transition ni animation aquí: el valor de stroke-dashoffset
+       lo escribe JS frame a frame, así que no hay ninguna regla CSS
+       compitiendo por esta propiedad. */
+  }
+
+  /* ---------- Links arriba/abajo ---------- */
+  /* Posicionados contra --outer-height (el alto visual real), no contra
+     el alto -mucho menor- de la caja sticky .site-nav. */
+
+  .site-nav-link {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-pink);
+    text-decoration: none;
+    font-size: var(--text-caption);
+  }
+
+  .site-nav-link--top {
+    top: 8px;
+  }
+
+  .site-nav-link--bottom {
+    top: calc(var(--outer-height) - 8px);
+    transform: translate(-50%, -100%);
+  }
+
+  .site-nav-venn-link[aria-current='page'],
+  .site-nav-link[aria-current='page'] {
+    text-decoration: none;
+  }
+</style>
+
+<script>
+  function fitEllipseToSvg(svg: SVGSVGElement, strokeWidth: number) {
+    const { width, height } = svg.getBoundingClientRect();
+    // Oculto vía CSS (display: none, p.ej. SiteNav en desktop): no hay caja
+    // real que medir. Salir sin tocar nada evita fijar un rx/ry negativo
+    // inválido.
+    if (width === 0 || height === 0) return null;
+
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+    const ellipse = svg.querySelector('ellipse');
+    if (!ellipse) return null;
+
+    ellipse.setAttribute('cx', `${width / 2}`);
+    ellipse.setAttribute('cy', `${height / 2}`);
+    ellipse.setAttribute('rx', `${width / 2 - strokeWidth}`);
+    ellipse.setAttribute('ry', `${height / 2 - strokeWidth}`);
+
+    return ellipse;
+  }
+
+  const STROKE_WIDTH = 1;
+
+  // Es seguro de repetir (resize/fonts/load): fitEllipseToSvg vuelve a medir
+  // el box real y solo actualiza stroke-dasharray (stroke-dashoffset ya lo
+  // mantiene fijo a 0 la animación "forwards", así que no se reinicia el
+  // dibujo).
+  function fitOuterEllipse() {
+    const outerSvg = document.querySelector<SVGSVGElement>('.site-nav-outer');
+    if (!outerSvg) return;
+
+    const ellipse = fitEllipseToSvg(outerSvg, STROKE_WIDTH);
+    if (!ellipse) return;
+
+    // El óvalo envolvente debe ocupar el 100% del ancho, sin descontar el stroke
+    ellipse.setAttribute('rx', `${outerSvg.getBoundingClientRect().width / 2}`);
+
+    const length = Math.ceil(ellipse.getTotalLength());
+    ellipse.style.strokeDasharray = `${length}`;
+    ellipse.style.strokeDashoffset = `${length}`;
+
+    requestAnimationFrame(() => {
+      ellipse.classList.add('is-ready');
+    });
+  }
+
+  // ---------- Óvalos del venn: se dibujan una vez al cargar y se quedan así ----------
+  // initVennDraw() es seguro de repetir: fitEllipseToSvg vuelve a medir el
+  // box real y solo actualiza stroke-dasharray (stroke-dashoffset ya lo
+  // mantiene fijo a 0 la animación "forwards", así que no se reinicia el
+  // dibujo).
+  function initVennDraw() {
+    const svgs = document.querySelectorAll<SVGSVGElement>('.site-nav-venn-circle');
+    svgs.forEach((svg) => fitEllipseToSvg(svg, STROKE_WIDTH));
+
+    const ellipses = document.querySelectorAll<SVGGeometryElement>('.site-nav-venn-circle ellipse');
+
+    ellipses.forEach((el) => {
+      const length = Math.ceil(el.getTotalLength());
+      el.style.strokeDasharray = `${length}`;
+      el.style.strokeDashoffset = `${length}`;
+    });
+
+    requestAnimationFrame(() => {
+      ellipses.forEach((el) => el.classList.add('is-ready'));
+    });
+  }
+
+  // ---------- Motor de animación manual para los links del venn ----------
+  // Controla stroke-dashoffset frame a frame, sin depender de CSS
+  // transition/animation, para poder interrumpir y encadenar fases
+  // (dibujar → borrar) siempre en la misma dirección, sin saltos.
+
+  interface DrawState {
+    length: number;
+    current: number;
+    rafId: number | null;
+  }
+
+  function setOffset(el: SVGGeometryElement, value: number, state: DrawState) {
+    state.current = value;
+    el.style.strokeDashoffset = `${value}`;
+  }
+
+  function animateTo(
+    el: SVGGeometryElement,
+    state: DrawState,
+    target: number,
+    duration: number,
+    onDone?: () => void
+  ) {
+    if (state.rafId !== null) {
+      cancelAnimationFrame(state.rafId);
+      state.rafId = null;
+    }
+
+    const from = state.current;
+
+    if (from === target || duration <= 0) {
+      setOffset(el, target, state);
+      onDone?.();
+      return;
+    }
+
+    const start = performance.now();
+
+    function frame(now: number) {
+      const t = Math.min((now - start) / duration, 1);
+      const value = from + (target - from) * t;
+      setOffset(el, value, state);
+
+      if (t < 1) {
+        state.rafId = requestAnimationFrame(frame);
+      } else {
+        state.rafId = null;
+        onDone?.();
+      }
+    }
+
+    state.rafId = requestAnimationFrame(frame);
+  }
+
+  const DRAW_MS = 500; // duración de "dibujar" el trazo
+  const ERASE_MS = 500; // duración de "borrar" siguiendo el mismo camino
+
+  interface LinkOutline {
+    svg: SVGSVGElement;
+    ellipse: SVGGeometryElement;
+    state: DrawState;
+    isActive: boolean;
+  }
+
+  // Se rellena en initVennLinkOutlines() y lo reutiliza syncVennLinkOutlines()
+  // para poder corregir el tamaño real sin duplicar listeners ni volver a
+  // lanzar la animación de intro.
+  const linkOutlines: LinkOutline[] = [];
+
+  function initVennLinkOutlines() {
+    const links = document.querySelectorAll<HTMLAnchorElement>('.site-nav-venn-link');
+    // En touch/mobile no hay hover real: evita que el "hover" se quede
+    // pintado tras un tap (mouseenter simulado sin mouseleave posterior).
+    const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    links.forEach((link) => {
+      const svg = link.querySelector<SVGSVGElement>('.site-nav-venn-link-outline');
+      if (!svg) return;
+
+      const isActive = link.getAttribute('aria-current') === 'page';
+
+      // Medimos en el siguiente frame (doble rAF), no en este mismo tick:
+      // en el primer render el botón todavía puede no tener su tamaño de
+      // grid definitivo, y medirlo demasiado pronto dejaba el óvalo del
+      // "dibujo de carga" fijado a un tamaño más pequeño del real.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const ellipse = fitEllipseToSvg(svg, STROKE_WIDTH) as SVGGeometryElement | null;
+          if (!ellipse) return;
+
+          const length = Math.ceil(ellipse.getTotalLength());
+          ellipse.setAttribute('stroke-dasharray', `${length}`);
+
+          const state: DrawState = { length, current: length, rafId: null };
+          setOffset(ellipse, length, state); // arranca oculto
+          linkOutlines.push({ svg, ellipse, state, isActive });
+
+          // --- Intro al cargar: dibuja y, si no es la página activa, borra
+          // por el mismo camino. La página activa se queda dibujada de
+          // forma permanente, no solo al hacer hover. ---
+          if (isActive) {
+            animateTo(ellipse, state, 0, DRAW_MS, () => syncVennLinkOutlines());
+          } else {
+            animateTo(ellipse, state, 0, DRAW_MS, () => {
+              animateTo(ellipse, state, -length, ERASE_MS, () => {
+                // -length y +length son visualmente idénticos (el patrón de
+                // guiones se repite cada 2×length), así que este reseteo
+                // no produce ningún salto visible.
+                setOffset(ellipse, length, state);
+                syncVennLinkOutlines();
+              });
+            });
+          }
+
+          // --- Mismo mecanismo en cada hover (solo en dispositivos con hover
+          // real y solo si no es ya la página activa, que se queda siempre
+          // dibujada) ---
+          if (supportsHover && !isActive) {
+            link.addEventListener('mouseenter', () => {
+              animateTo(ellipse, state, 0, DRAW_MS);
+            });
+
+            link.addEventListener('mouseleave', () => {
+              const target = state.current - length;
+              animateTo(ellipse, state, target, ERASE_MS, () => {
+                setOffset(ellipse, length, state); // reseteo silencioso, sin salto visual
+              });
+            });
+          }
+        });
+      });
+    });
+  }
+
+  // Recalcula viewBox/rx/ry/dasharray de cada link contra su tamaño real
+  // actual. Solo toca los que están en reposo (rafId === null): si hay una
+  // animación de dibujado/borrado en curso la deja terminar tal cual, para
+  // no producir un salto visual a mitad de trazo.
+  function syncVennLinkOutlines() {
+    linkOutlines.forEach(({ svg, ellipse, state, isActive }) => {
+      if (state.rafId !== null) return;
+
+      fitEllipseToSvg(svg, STROKE_WIDTH);
+      const length = Math.ceil(ellipse.getTotalLength());
+      if (length === state.length) return;
+
+      ellipse.setAttribute('stroke-dasharray', `${length}`);
+      state.length = length;
+      // En reposo: la página activa se queda dibujada (0), el resto oculto (length).
+      setOffset(ellipse, isActive ? 0 : length, state);
+    });
+  }
+
+  function initSiteNav() {
+    fitOuterEllipse();
+    initVennDraw();
+    initVennLinkOutlines();
+  }
+
+  document.addEventListener('DOMContentLoaded', initSiteNav);
+
+  // ---------- Resincroniza el tamaño tras el layout inicial ----------
+  // Corrige el desajuste que aparece cuando el viewBox se calculó antes de
+  // que la barra de direcciones móvil, las fuentes o las imágenes
+  // terminaran de asentar el layout real.
+  function scheduleGeometrySync() {
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        fitOuterEllipse();
+        initVennDraw();
+        syncVennLinkOutlines();
+      })
+    );
+  }
+
+  window.addEventListener('load', scheduleGeometrySync);
+  document.fonts?.ready.then(scheduleGeometrySync);
+  window.addEventListener('resize', scheduleGeometrySync);
+</script>

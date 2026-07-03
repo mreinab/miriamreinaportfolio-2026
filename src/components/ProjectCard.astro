@@ -1,0 +1,39 @@
+---
+interface Props {
+  collection: string;
+  slug: string;
+  title: string;
+  cover: string;
+  tags: string[];
+}
+
+const { collection, slug, title, cover, tags } = Astro.props;
+---
+
+<article class="flex">
+  <a class="w-full flex justify-end" href={`/${collection}/${slug}`}>
+    <img class="project-cover" src={cover} alt={title} />
+    <!-- <h3>{title}</h3> -->
+  </a>
+  <!-- <ul>
+    {tags.map((tag: string) => <li>{tag}</li>)}
+  </ul> -->
+</article>
+
+<style>
+  .project-cover {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Solo tablet/desktop: en mobile la imagen se queda a ancho completo.
+     Width libre (auto): cada imagen conserva su proporción natural y no
+     todas miden lo mismo, pero todas comparten el mismo height. */
+  @media (min-width: 768px) {
+    .project-cover {
+      width: auto;
+      height: 45dvh;
+    }
+  }
+</style>

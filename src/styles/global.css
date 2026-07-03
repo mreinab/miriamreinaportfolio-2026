@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  /* Tipografía */
+  --font-sans:  "Helvetica","Inter", ui-sans-serif, sans-serif;
+
+  --text-micro: 0.625rem;   /* 10px */
+  --text-caption: 0.75rem;  /* 12px */
+  --text-label: 0.9rem;     /* 14.4px, equivalente al 0.9em de .landing */
+  --text-body: 1rem;        /* 16px */
+
+  /* Neutros */
+  --color-ink: #111111;
+  --color-paper: #fdfdfd;
+  --color-muted: #6b6b6b;
+  --color-line: #e5e5e5;
+
+  /* Paleta de color */
+  --color-maroon: #5f1700;
+  --color-pink: #ef8dbc;
+  --color-mint: #b3e5dc;
+  --color-vermilion: #fa451e;
+  --color-blue-electric: #161DFE;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Oculta la barra de scroll visualmente, sin quitar el scroll en sí. */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge viejo */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Edge Chromium */
+}
+
+/* Agrupa imágenes relacionadas (mismo nombre base) en columnas dentro del
+   contenido markdown de los proyectos (p.ej. collage-fashion.md). */
+.photo-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.photo-grid img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.photo-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.photo-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Texto del campo `summary` del frontmatter, en las páginas de detalle
+   de proyecto (fashion/webdev/graphicdesign [slug].astro). */
+.project-summary {
+  font-size: var(--text-caption);
+  line-height: 1.6;
+  padding-top: 0.5rem;
+}
+
+/* Lista de `tags` del frontmatter, en las páginas de detalle de proyecto. */
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.project-tag {
+  font-size: var(--text-caption);
+}

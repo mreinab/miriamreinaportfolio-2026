@@ -1,0 +1,32 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import SitePage from '../../components/SitePage.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('webdev');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout title={entry.data.title} chrome={false} favicon="/favicon-webdev.png" fonts={true}>
+  <SitePage active="webdev">
+    <article>
+      <h1>{entry.data.title}</h1>
+      <img src={entry.data.cover} alt={entry.data.title} />
+      <p class="project-summary">{entry.data.summary}</p>
+      <ul class="project-tags">
+        {entry.data.tags.map((tag: string) => <li class="project-tag">{tag}</li>)}
+      </ul>
+      <div>
+        <Content />
+      </div>
+    </article>
+  </SitePage>
+</Layout>

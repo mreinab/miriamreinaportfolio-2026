@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LandingVenn from '../components/LandingVenn.astro';
+
+const year = new Date().getFullYear();
+const email = 'm.reinabolanos@gmail.com'; 
+---
+
+<Layout title="Portfolio" chrome={false} fonts={true}>
+  <img
+    src="/images/index/desktop-index-portfolio.gif"
+    alt=""
+    class="landing-bg fixed inset-0 -z-10 hidden h-full w-full object-cover md:block"
+  />
+  <img
+    src="/images/index/mobile-index-portfolio.gif"
+    alt=""
+    class="landing-bg fixed inset-0 -z-10 block h-full w-full object-cover md:hidden"
+  />
+
+  <div class="landing flex h-dvh w-dvw flex-col justify-between text-paper text-micro">
+    <div class="p-4 flex flex-col">
+      <p class="landing-text-bg">hi  :)</p>
+      <p class="landing-text-bg">My name is miriam</p>
+      <p class="landing-text-bg">I work in the intersection of:</p>
+    </div>
+
+    <LandingVenn />
+
+    <div class="flex flex-col items-end p-4">
+      <a class="landing-text-bg" href="https://instagram.com/mimilovesdots" target="_blank" rel="noopener noreferrer">instagram</a>
+      <button class="landing-text-bg uppercase" type="button" id="copy-email" data-email={email}>{email}</button>
+      <p class="landing-text-bg">{year} &copy; Miriam Reina All Rights Reserved.</p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .landing {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .landing-bg {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .landing-bg.is-loaded {
+    opacity: 1;
+  }
+
+  .landing-text-bg {
+    width: fit-content;
+    padding: 0.025rem 0.025rem;
+  }
+</style>
+
+<script>
+  function revealBackgrounds() {
+    const images = document.querySelectorAll<HTMLImageElement>('.landing-bg');
+
+    images.forEach((img) => {
+      if (img.complete) {
+        img.classList.add('is-loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('is-loaded'), { once: true });
+      }
+    });
+  }
+
+  revealBackgrounds();
+</script>
+
+<script>
+  const copyButton = document.getElementById('copy-email');
+
+  copyButton?.addEventListener('click', async () => {
+    const email = copyButton.dataset.email ?? '';
+    await navigator.clipboard.writeText(email);
+
+    const original = copyButton.textContent;
+    copyButton.textContent = 'copied';
+    setTimeout(() => {
+      copyButton.textContent = original;
+    }, 1500);
+  });
+</script>

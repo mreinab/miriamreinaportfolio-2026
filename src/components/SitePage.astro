@@ -1,0 +1,29 @@
+---
+// src/components/SitePage.astro
+// Wrapper compartido por todas las páginas (excepto index): en mobile,
+// SiteNav arriba + contenido debajo; en desktop (>= 900px), columna
+// izquierda fija (DesktopSideNav) + contenido en la mitad derecha.
+import SiteNav from './SiteNav.astro';
+import DesktopSideNav from './DesktopSideNav.astro';
+
+interface Props {
+  active?: 'graphicdesign' | 'fashion' | 'webdev';
+}
+
+const { active } = Astro.props;
+---
+<SiteNav active={active} />
+<DesktopSideNav active={active} />
+<div class="site-page-content">
+  <slot />
+</div>
+
+<style>
+  @media (min-width: 900px) {
+    .site-page-content {
+      margin-left: 50%;
+      min-height: 100dvh;
+      background-color: var(--color-paper);
+    }
+  }
+</style>
