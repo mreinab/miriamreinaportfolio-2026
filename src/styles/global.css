@@ -39,11 +39,25 @@ html::-webkit-scrollbar {
   display: none; /* Chrome/Safari/Edge Chromium */
 }
 
+/* Fade-in al cargar, igual que el fondo del index: arrancan invisibles y
+   aparecen suavemente cuando la imagen termina de cargar (ver script en
+   Layout.astro). Cubre el cover de las tarjetas, el cover grande de
+   detalle y la galería del markdown, porque todos viven dentro de un
+   <article>. */
+article img {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+article img.is-loaded {
+  opacity: 1;
+}
+
 /* Agrupa imágenes relacionadas (mismo nombre base) en columnas dentro del
    contenido markdown de los proyectos (p.ej. collage-fashion.md). */
 .photo-grid {
   display: grid;
-  gap: 0.5rem;
+  gap: 0rem;
 }
 
 .photo-grid img {
@@ -58,6 +72,15 @@ html::-webkit-scrollbar {
 
 .photo-grid--3 {
   grid-template-columns: repeat(3, 1fr);
+}
+
+/* Cover de la página de detalle de un proyecto individual
+   (fashion/webdev/graphicdesign [slug].astro). */
+.project-cover-hero {
+  width: 100%;
+  max-height: 90dvh;
+  object-fit: cover;
+  display: block;
 }
 
 /* Texto del campo `summary` del frontmatter, en las páginas de detalle
@@ -79,4 +102,10 @@ html::-webkit-scrollbar {
 
 .project-tag {
   font-size: var(--text-caption);
+}
+
+@media (max-width: 640px) {
+  .project-tag, .project-summary {
+      padding: 0.5rem 0.2rem 0;
+  }
 }

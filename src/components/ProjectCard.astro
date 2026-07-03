@@ -10,7 +10,7 @@ interface Props {
 const { collection, slug, title, cover, tags } = Astro.props;
 ---
 
-<article class="flex">
+<article class="flex bg-paper">
   <a class="w-full flex justify-end" href={`/${collection}/${slug}`}>
     <img class="project-cover" src={cover} alt={title} />
     <!-- <h3>{title}</h3> -->

@@ -60,3 +60,22 @@ const { title = 'Portfolio', chrome = true, fonts = false, favicon = '/favicon.p
     }
   </body>
 </html>
+
+<script>
+  // Mismo fade-in que usa el fondo del index: las imágenes dentro de un
+  // <article> (cover de tarjeta, cover grande de detalle, galería del
+  // markdown) arrancan invisibles y aparecen suavemente al cargar.
+  function revealArticleImages() {
+    const images = document.querySelectorAll<HTMLImageElement>('article img');
+
+    images.forEach((img) => {
+      if (img.complete) {
+        img.classList.add('is-loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('is-loaded'), { once: true });
+      }
+    });
+  }
+
+  revealArticleImages();
+</script>

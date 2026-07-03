@@ -7,10 +7,14 @@ summary: "Collage is part of my process as a creative. It has become an extensio
 featured: true
 ---
 
+![Collage collection](/images/fashion/collage/collage-cover-01.png)
+
+
 ![Collage collection](/images/fashion/collage/collage-03.jpg)
 
 
-![Collage collection](images/fashion/collage/practice-room.jp)
+
+![Collage collection](/images/fashion/collage/practice-room.jpg)
 
 
 ![Collage collection](/images/fashion/collage/collage-bg.png)
@@ -33,10 +37,10 @@ featured: true
   <img src="/images/fashion/collage/Week2-Giulia.jpg" alt="Collage collection" />
 </div>
 
-<div class="photo-grid photo-grid--2">
-  <img src="/images/fashion/collage/practice-room-3.jpg" alt="Collage collection" />
-  <img src="/images/fashion/collage/practice-room-4.jpg" alt="Collage collection" />
-</div>
+
+![Collage collection](/images/fashion/collage/practice-room-3.jpg)
+
+![Collage collection](/images/fashion/collage/practice-room-4.jpg)
 
 <div class="photo-grid photo-grid--2">
   <img src="/images/fashion/collage/collage-10.png" alt="Collage collection" />

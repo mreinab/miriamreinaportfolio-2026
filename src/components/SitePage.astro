@@ -19,11 +19,16 @@ const { active } = Astro.props;
 </div>
 
 <style>
+
+  .site-page-content {
+    background-color: var(--color-paper) !important;
+  }
+
   @media (min-width: 900px) {
     .site-page-content {
       margin-left: 50%;
-      min-height: 100dvh;
-      background-color: var(--color-paper);
+      max-height: 100dvh;
+      background-color: var(--color-paper) !important;
     }
   }
 </style>

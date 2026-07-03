@@ -19,7 +19,7 @@ const { Content } = await render(entry);
   <SitePage active="webdev">
     <article>
       <h1>{entry.data.title}</h1>
-      <img src={entry.data.cover} alt={entry.data.title} />
+      <img class="project-cover-hero" src={entry.data.cover} alt={entry.data.title} />
       <p class="project-summary">{entry.data.summary}</p>
       <ul class="project-tags">
         {entry.data.tags.map((tag: string) => <li class="project-tag">{tag}</li>)}
