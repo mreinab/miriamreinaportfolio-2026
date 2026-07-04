@@ -1,7 +1,7 @@
 ---
 title: "Aplicación web de ejemplo"
 cover: "/images/placeholder.jpg"
-tags: ["astro", "tailwind", "frontend"]
+tags: ["[astro]", "[tailwind]", "[frontend]"]
 order: 1
 summary: "Proyecto de ejemplo de desarrollo web, usado para probar el listado y la página de detalle."
 featured: true

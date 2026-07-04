@@ -1,7 +1,7 @@
 ---
 title: "ST Fashion Show 26"
 cover: "/images/fashion/stfashionshow-bg.gif"
-tags: ["[Backstage photography]", "[Postproduction]"]
+tags: ["[backstage photography]", "[postproduction]"]
 order: 6
 summary: "(2025) The ST Fashion Show showcases the final collections of graduating fashion students from the San Telmo School of Arts. Held annually in Málaga, Spain. October 2025."
 featured: true

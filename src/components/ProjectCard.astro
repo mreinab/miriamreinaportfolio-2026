@@ -25,6 +25,8 @@ const { collection, slug, title, cover, tags } = Astro.props;
     display: none;
   }
 
+
+
   .project-cover {
     width: 100%;
     height: auto;
@@ -38,6 +40,14 @@ const { collection, slug, title, cover, tags } = Astro.props;
     .project-cover {
       width: auto;
       height: 28dvh;
+    }
+
+    .project-card-title {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      color: var(--color-pink);
+      text-transform: uppercase;
     }
   }
 </style>
