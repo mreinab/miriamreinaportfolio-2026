@@ -45,6 +45,9 @@ html::-webkit-scrollbar {
    detalle y la galería del markdown, porque todos viven dentro de un
    <article>. */
 article img {
+  width: 100%;
+  height: auto;
+  display: block;
   opacity: 0;
   transition: opacity 0.4s ease;
 }

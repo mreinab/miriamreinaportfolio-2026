@@ -117,7 +117,7 @@ const { active } = Astro.props;
   .site-nav-outer ellipse {
     fill: none;
     stroke: var(--color-pink);
-    stroke-width: 1px;
+    stroke-width: 1.25px;
     opacity: 0;
     /* Por defecto el navegador dibuja la elipse derecha → abajo → izquierda
        → arriba → derecha. El flip vertical invierte el sentido del barrido
@@ -182,7 +182,7 @@ const { active } = Astro.props;
   .site-nav-venn-circle ellipse {
     fill: none;
     stroke: var(--color-pink);
-    stroke-width: 1px;
+    stroke-width: 1.25px;
     opacity: 0;
   }
 
@@ -246,7 +246,7 @@ const { active } = Astro.props;
   .site-nav-venn-link-outline ellipse {
     fill: none;
     stroke: var(--color-pink);
-    stroke-width: 1px;
+    stroke-width: 1.25px;
     /* Sin transition ni animation aquí: el valor de stroke-dashoffset
        lo escribe JS frame a frame, así que no hay ninguna regla CSS
        compitiendo por esta propiedad. */
@@ -301,7 +301,7 @@ const { active } = Astro.props;
     return ellipse;
   }
 
-  const STROKE_WIDTH = 1;
+  const STROKE_WIDTH = 1.25;
 
   // Es seguro de repetir (resize/fonts/load): fitEllipseToSvg vuelve a medir
   // el box real y solo actualiza stroke-dasharray (stroke-dashoffset ya lo

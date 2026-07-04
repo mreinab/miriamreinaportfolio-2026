@@ -3,7 +3,7 @@ title: "Collage collection"
 cover: "/images/fashion/collage-cover.jpg"
 tags: ["[creative direction]", "[post-production]"]
 order: 3
-summary: "Collage is part of my process as a creative. It has become an extension of my visual language. This collection brings together digital collages and scans in different formats, conceived as a space for experimentation with textures, color combinations and narratives."
+summary: "(ongoing) Collage is part of my process as a creative. It has become an extension of my visual language. This collection brings together digital collages and scans in different formats, conceived as a space for experimentation with textures, color combinations and narratives."
 featured: true
 ---
 
@@ -15,6 +15,7 @@ featured: true
 
 
 ![Collage collection](/images/fashion/collage/practice-room.jpg)
+
 
 
 ![Collage collection](/images/fashion/collage/collage-bg.png)
@@ -32,15 +33,20 @@ featured: true
   <img src="/images/fashion/collage/Week-05-7.jpg" alt="Collage collection" />
 </div>
 
+![Collage collection](/images/fashion/collage/practice-room-3.jpg)
+
+![Collage collection](/images/fashion/collage/practice-room-4.jpg)
+
+![Collage collection](/images/fashion/collage/practice-room-5.jpg)
+
+![Collage collection](/images/fashion/collage/collage-05.gif)
+
+
 <div class="photo-grid photo-grid--2">
   <img src="/images/fashion/collage/Week2-angela.jpg" alt="Collage collection" />
   <img src="/images/fashion/collage/Week2-Giulia.jpg" alt="Collage collection" />
 </div>
 
-
-![Collage collection](/images/fashion/collage/practice-room-3.jpg)
-
-![Collage collection](/images/fashion/collage/practice-room-4.jpg)
 
 <div class="photo-grid photo-grid--2">
   <img src="/images/fashion/collage/collage-10.png" alt="Collage collection" />
@@ -49,8 +55,6 @@ featured: true
   <img src="/images/fashion/collage/collage-13.jpg" alt="Collage collection" />
 </div>
 
-
-![Collage collection](/images/fashion/collage/collage-florars.png)
 
 ![Collage collection](/images/fashion/collage/details-pre.jpg)
 

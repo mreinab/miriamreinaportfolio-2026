@@ -10,10 +10,10 @@ interface Props {
 const { collection, slug, title, cover, tags } = Astro.props;
 ---
 
-<article class="flex bg-paper">
+<article class="relative flex bg-paper">
+  <p class="project-card-title text-caption">{title}</p>
   <a class="w-full flex justify-end" href={`/${collection}/${slug}`}>
     <img class="project-cover" src={cover} alt={title} />
-    <!-- <h3>{title}</h3> -->
   </a>
   <!-- <ul>
     {tags.map((tag: string) => <li>{tag}</li>)}
@@ -21,6 +21,10 @@ const { collection, slug, title, cover, tags } = Astro.props;
 </article>
 
 <style>
+  .project-card-title {
+    display: none;
+  }
+
   .project-cover {
     width: 100%;
     height: auto;
@@ -33,7 +37,7 @@ const { collection, slug, title, cover, tags } = Astro.props;
   @media (min-width: 768px) {
     .project-cover {
       width: auto;
-      height: 45dvh;
+      height: 28dvh;
     }
   }
 </style>

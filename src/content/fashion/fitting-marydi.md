@@ -2,8 +2,8 @@
 title: "Fitting for Mary Di 2"
 cover: "/images/fashion/mary-di-cover.gif"
 tags: ["[fittings]"]
-order: 3
-summary: "Fittings for Mary Di @merneis at Deuss showroom in Málaga. Wearing @ant1calma @spring_________cleaning @castella.designs. Team @martakunst"
+order: 4
+summary: "(2026) Fittings for Mary Di @merneis at Deuss showroom in Málaga. Wearing @ant1calma @spring_________cleaning @castella.designs. Team @martakunst"
 featured: true
 ---
 
