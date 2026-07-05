@@ -3,7 +3,7 @@ title: "THEFOLDER"
 cover: "/images/graphicdesign/thefolder-cover.jpg"
 tags: ["[product design]", "[creative direction]","[webdevelopment]"]
 order: 1
-summary: "As founder and Creative Director, I designed the end-to-end visual identity and UX/UI for THEFOLDER, a portfolio platform for fashion creatives. From onboarding flows and a masonry gallery to a level-based profile system and a modular template library. I also led the brand voice and visual language across the landing page, legal content, and all social/marketing communication."
+summary: "(2026) I designed the end-to-end visual identity and UX/UI for THEFOLDER, a portfolio platform for fashion creatives. From onboarding flows and a masonry gallery to a level-based profile system and a modular template library. I also led the brand voice and visual language across the landing page, legal content, and all social/marketing communication."
 featured: true
 ---
 

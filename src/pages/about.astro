@@ -5,6 +5,17 @@ import SitePage from '../components/SitePage.astro';
 
 <Layout title="About" chrome={false} fonts={true}>
   <SitePage>
-    <h1>About</h1>
+    <div class="flex h-dvh flex-col justify-center align-center gap-2">
+      <h1 class="project-summary hidden">About</h1>
+      <p class="text-caption">
+        I thrive on transforming ideas into experiences that resonate and inspire, exploring the intersection between web development, fashion and graphic design. Fast learner and passionate about how new technologies enhance creativity.
+      </p>
+      <p class="text-caption">
+        My toolkit includes Photoshop, Illustrator, InDesign, Figma, Notion/Trello, WordPress, Cursor, VSCode, Lovable, Webflow, HTML5, CSS3, JavaScript, Jitter, After Effects, Premiere Pro
+      </p>
+      <p class="text-caption">
+        Contact me (<a href="mailto:m.reinabolanos@gmail.com" target="_blank" rel="noopener noreferrer">m.reinabolanos@gmail.com</a>) (<a href="https://www.instagram.com/mimilovesdots/" target="_blank" rel="noopener noreferrer">@mimilovesdots</a>)
+      </p>
+    </div>
   </SitePage>
 </Layout>

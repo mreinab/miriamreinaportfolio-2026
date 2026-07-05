@@ -5,7 +5,7 @@
   --font-sans:  "Helvetica","Inter", ui-sans-serif, sans-serif;
 
   --text-micro: 0.625rem;   /* 10px */
-  --text-caption: 0.75rem;  /* 12px */
+  --text-caption: 0.63rem;  /* 12px */
   --text-label: 0.9rem;     /* 14.4px, equivalente al 0.9em de .landing */
   --text-body: 1rem;        /* 16px */
 
@@ -126,6 +126,14 @@ article img.is-loaded {
   line-height: 1.6;
   padding-top: 0.25rem;
   padding-bottom: 0rem;
+}
+
+/* Campo `link` del frontmatter (solo webdev), entre summary y tags. */
+.project-link {
+  display: block;
+  font-size: var(--text-caption);
+  color: var(--color-blue-electric);
+  padding-top: 0.25rem;
 }
 
 /* Lista de `tags` del frontmatter, en las páginas de detalle de proyecto. */

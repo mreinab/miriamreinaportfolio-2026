@@ -23,7 +23,9 @@ const fashion = defineCollection({
 
 const webdev = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/webdev' }),
-  schema: projectSchema,
+  schema: projectSchema.extend({
+    link: z.string().url().optional(),
+  }),
 });
 
 export const collections = { graphicdesign, fashion, webdev };

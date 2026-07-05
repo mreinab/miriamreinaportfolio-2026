@@ -23,6 +23,13 @@ const { Content } = await render(entry);
       <h1 class="hidden">{entry.data.title}</h1>
       <img class="project-cover-hero" src={entry.data.cover} alt={entry.data.title} />
       <p class="project-summary">{entry.data.summary}</p>
+      {
+        entry.data.link && (
+          <a class="project-link" href={entry.data.link} target="_blank" rel="noopener noreferrer">
+            {entry.data.link}
+          </a>
+        )
+      }
       <ul class="project-tags">
         {entry.data.tags.map((tag: string) => <li class="project-tag">{tag}</li>)}
       </ul>

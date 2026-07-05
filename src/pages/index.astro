@@ -21,7 +21,7 @@ const email = 'm.reinabolanos@gmail.com';
   <div class="landing flex h-dvh w-dvw flex-col justify-between text-paper text-micro">
     <div class="p-4 flex flex-col">
       <p class="landing-text-bg">hi  :)</p>
-      <p class="landing-text-bg">My name is miriam</p>
+      <p class="landing-text-bg">My name is <a class="landing-name-link" href="/about">miriam</a></p>
       <p class="landing-text-bg">I work in the intersection of:</p>
     </div>
 
@@ -55,6 +55,11 @@ const email = 'm.reinabolanos@gmail.com';
     width: fit-content;
     padding: 0.025rem 0.025rem;
     font-size: var(--text-caption);
+  }
+
+  .landing-name-link {
+    color: inherit;
+    text-decoration: underline;
   }
 </style>
 
