@@ -20,7 +20,7 @@ const { Content } = await render(entry);
 <Layout title={entry.data.title} chrome={false} favicon="/favicon-graphic.png" fonts={true}>
   <SitePage active="graphicdesign">
     <article>
-      <h1>{entry.data.title}</h1>
+      <h1 class="hidden">{entry.data.title}</h1>
       <img class="project-cover-hero" src={entry.data.cover} alt={entry.data.title} />
       <p class="project-summary">{entry.data.summary}</p>
       <ul class="project-tags">

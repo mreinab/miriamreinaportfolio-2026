@@ -41,7 +41,7 @@ const { collection, slug, title, cover, tags } = Astro.props;
   @media (min-width: 768px) {
     .project-cover {
       width: auto;
-      height: 28dvh;
+      height: var(--project-cover-height, 32dvh);
     }
 
     /* Solo mobile: en tablet/desktop se oculta. */

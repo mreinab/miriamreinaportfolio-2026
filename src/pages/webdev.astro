@@ -11,7 +11,7 @@ const projects = (await getCollection('webdev')).sort(
 
 <Layout title="Desarrollo" chrome={false} favicon="/favicon-webdev.png" fonts={true}>
   <SitePage active="webdev">
-    <ul>
+    <ul class="project-list-lg">
       {
         projects.map((entry) => (
           <li>

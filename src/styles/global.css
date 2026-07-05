@@ -29,6 +29,23 @@ body {
   letter-spacing: 0.01em;
 }
 
+/* Transición elegante entre páginas (p.ej. al entrar a un proyecto),
+   en vez del corte instantáneo por defecto del navegador. Sigue siendo
+   una navegación normal (MPA, sin SPA/router de Astro): cada página
+   recarga de verdad y todos los scripts existentes (nav, venn) se
+   re-ejecutan igual que siempre, el navegador simplemente anima un
+   crossfade entre la captura de la página anterior y la nueva. Se
+   degrada sin problema en navegadores que aún no lo soporten. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: ease;
+}
+
 /* Oculta la barra de scroll visualmente, sin quitar el scroll en sí.
    El background-color va aquí, no en main: .site-page-content tiene
    max-height: 100dvh, así que su fondo solo cubre la primera pantalla.
@@ -83,6 +100,14 @@ article img.is-loaded {
 
 .photo-grid--3 {
   grid-template-columns: repeat(3, 1fr);
+}
+
+/* Listados de webdev/graphicdesign: covers más grandes que el resto
+   (fashion usa el 38dvh por defecto de ProjectCard.astro). */
+@media (min-width: 768px) {
+  .project-list-lg {
+    --project-cover-height: 46dvh;
+  }
 }
 
 /* Cover de la página de detalle de un proyecto individual

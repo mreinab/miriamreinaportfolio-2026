@@ -12,7 +12,7 @@ const projects = (await getCollection('graphicdesign')).sort(
 
 <Layout title="Diseño" chrome={false} favicon="/favicon-graphic.png" fonts={true}>
   <SitePage active="graphicdesign">
-    <ul>
+    <ul class="project-list-lg">
       {
         projects.map((entry) => (
           <li>
