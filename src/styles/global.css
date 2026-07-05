@@ -29,8 +29,16 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* Oculta la barra de scroll visualmente, sin quitar el scroll en sí. */
+/* Oculta la barra de scroll visualmente, sin quitar el scroll en sí.
+   El background-color va aquí, no en main: .site-page-content tiene
+   max-height: 100dvh, así que su fondo solo cubre la primera pantalla.
+   Por debajo (el resto de proyectos, al hacer scroll), ningún ancestro
+   pintaba fondo y solo se veía "papel" porque cada card pinta su propio
+   bg-paper — al ocultarla en hover revelaba el blanco por defecto del
+   canvas. html sí extiende su color a todo el alto scrolleable de la
+   página (no solo su propia caja), así que cubre ese hueco. */
 html {
+  background-color: var(--color-paper);
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge viejo */
 }
@@ -91,7 +99,8 @@ article img.is-loaded {
 .project-summary {
   font-size: var(--text-caption);
   line-height: 1.6;
-  padding-top: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0rem;
 }
 
 /* Lista de `tags` del frontmatter, en las páginas de detalle de proyecto. */
@@ -99,16 +108,58 @@ article img.is-loaded {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .project-tag {
   font-size: var(--text-caption);
 }
 
+/* Enlace al siguiente proyecto, al final de la página de detalle
+   (fashion/webdev/graphicdesign [slug].astro). Solo texto, pegado a la
+   derecha, alto fijo de 36px. */
+.next-project-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0px;
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+}
+
+.next-project-link:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 640px) {
-  .project-tag, .project-summary {
-      padding: 0.5rem 0.2rem 0;
+  .project-summary {
+      padding: 0.25rem 0.2rem 0;
+  }
+
+  .project-tags {
+    padding-left: 0.2rem;
+  }
+}
+
+/* Listados de proyectos (fashion/webdev/graphicdesign): al hacer hover
+   sobre la imagen cover de una card (no la card entera: el <a> y el
+   article son w-full, así que sin este matiz cualquier hueco vacío a su
+   alrededor también dispararía el hover), el resto desaparece (opacity 0)
+   dejando su hueco en blanco, no colapsando el layout. Vive aquí y no en
+   ProjectCard.astro porque el <ul> que envuelve las cards está en la
+   página, fuera del scope del componente. Solo en desktop con hover
+   real: en táctil no hay :hover persistente que "deje pegado" el resto
+   oculto. */
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .project-card {
+    transition: opacity 0.3s ease;
+  }
+
+  ul:has(.project-cover:hover) .project-card:not(:has(.project-cover:hover)) {
+    opacity: 0;
+    pointer-events: none;
   }
 }

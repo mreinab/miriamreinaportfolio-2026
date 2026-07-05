@@ -4,14 +4,16 @@ import Layout from '../../layouts/Layout.astro';
 import SitePage from '../../components/SitePage.astro';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('graphicdesign');
-  return entries.map((entry) => ({
+  const entries = (await getCollection('graphicdesign')).sort(
+    (a, b) => a.data.order - b.data.order
+  );
+  return entries.map((entry, index) => ({
     params: { slug: entry.id },
-    props: { entry },
+    props: { entry, nextEntry: entries[(index + 1) % entries.length] },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, nextEntry } = Astro.props;
 const { Content } = await render(entry);
 ---
 
@@ -27,6 +29,7 @@ const { Content } = await render(entry);
       <div>
         <Content />
       </div>
+      <a class="next-project-link" href={`/graphicdesign/${nextEntry.id}`}>(Next project)</a>
     </article>
   </SitePage>
 </Layout>

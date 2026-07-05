@@ -11,5 +11,5 @@ featured: true
 
 ![Anna Elisabeth Eikendal seen by Pablo Puche](/images/fashion/pablopuche/pablopuche-01.jpg)
 
-![Anna Elisabeth Eikendal seen by Pablo Puche](/images/fashion/pablopuche/pablopuche-02.png)
+![Anna Elisabeth Eikendal seen by Pablo Puche](/images/fashion/pablopuche/pablopuche-02.jpg)
 

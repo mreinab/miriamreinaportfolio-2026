@@ -10,7 +10,7 @@ interface Props {
 const { collection, slug, title, cover, tags } = Astro.props;
 ---
 
-<article class="relative flex bg-paper">
+<article class="relative flex bg-paper project-card">
   <p class="project-card-title text-caption">{title}</p>
   <a class="w-full flex justify-end" href={`/${collection}/${slug}`}>
     <img class="project-cover" src={cover} alt={title} />
@@ -47,6 +47,19 @@ const { collection, slug, title, cover, tags } = Astro.props;
     /* Solo mobile: en tablet/desktop se oculta. */
     .project-card-title {
       display: none;
+    }
+  }
+
+  /* En desktop, al hacer hover sobre la cover de esta misma card, se
+     vuelve a mostrar el título — pero en color normal (ink), no paper:
+     aquí no queda sobre la imagen (que está pegada a la derecha) sino
+     sobre el hueco en blanco a su izquierda, donde el texto paper no se
+     vería. */
+  @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+    .project-card:has(.project-cover:hover) .project-card-title {
+      display: block;
+      bottom: 50%;
+      color: var(--color-ink);
     }
   }
 </style>

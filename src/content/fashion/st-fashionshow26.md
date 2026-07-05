@@ -1,5 +1,5 @@
 ---
-title: "ST Fashion Show 26"
+title: "ST Fashion Show 2025"
 cover: "/images/fashion/stfashionshow-bg.gif"
 tags: ["[backstage photography]", "[postproduction]"]
 order: 6
