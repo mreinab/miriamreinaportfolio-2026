@@ -77,7 +77,7 @@ const { active } = Astro.props;
     margin-bottom: calc(-1 * var(--nav-height));
     font-family: var(--font-sans);
     text-transform: uppercase;
-    color: var(--color-pink);
+    color: var(--color-paper);
     pointer-events: none;
   }
 
@@ -116,7 +116,7 @@ const { active } = Astro.props;
 
   .site-nav-outer ellipse {
     fill: none;
-    stroke: var(--color-pink);
+    stroke: var(--color-paper);
     stroke-width: 1.25px;
     opacity: 0;
     /* Por defecto el navegador dibuja la elipse derecha → abajo → izquierda
@@ -181,7 +181,7 @@ const { active } = Astro.props;
 
   .site-nav-venn-circle ellipse {
     fill: none;
-    stroke: var(--color-pink);
+    stroke: var(--color-paper);
     stroke-width: 1.25px;
     opacity: 0;
   }
@@ -212,7 +212,7 @@ const { active } = Astro.props;
     justify-content: center;
     width: 100%;
     height: calc(var(--circle-size) / 2);
-    color: var(--color-pink);
+    color: var(--color-paper);
     text-decoration: none;
     font-size: var(--text-caption);
     white-space: normal;
@@ -245,7 +245,7 @@ const { active } = Astro.props;
 
   .site-nav-venn-link-outline ellipse {
     fill: none;
-    stroke: var(--color-pink);
+    stroke: var(--color-paper);
     stroke-width: 1.25px;
     /* Sin transition ni animation aquí: el valor de stroke-dashoffset
        lo escribe JS frame a frame, así que no hay ninguna regla CSS
@@ -260,7 +260,7 @@ const { active } = Astro.props;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    color: var(--color-pink);
+    color: var(--color-paper);
     text-decoration: none;
     font-size: var(--text-caption);
   }

@@ -22,10 +22,12 @@ const { collection, slug, title, cover, tags } = Astro.props;
 
 <style>
   .project-card-title {
-    display: none;
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    color: var(--color-paper);
+    text-transform: uppercase;
   }
-
-
 
   .project-cover {
     width: 100%;
@@ -42,12 +44,9 @@ const { collection, slug, title, cover, tags } = Astro.props;
       height: 28dvh;
     }
 
+    /* Solo mobile: en tablet/desktop se oculta. */
     .project-card-title {
-      position: absolute;
-      bottom: 4px;
-      left: 4px;
-      color: var(--color-pink);
-      text-transform: uppercase;
+      display: none;
     }
   }
 </style>
