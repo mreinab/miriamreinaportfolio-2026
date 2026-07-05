@@ -25,8 +25,19 @@ const { collection, slug, title, cover, tags } = Astro.props;
     position: absolute;
     bottom: 4px;
     left: 4px;
-    color: var(--color-paper);
+    right: 4px;
+    color: transparent;
     text-transform: uppercase;
+  }
+
+  .project-card-title::after {
+    content: "🡪";
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    color: #ffffff;
+    text-transform: uppercase;
+    mix-blend-mode: difference;
   }
 
   .project-cover {
@@ -60,6 +71,10 @@ const { collection, slug, title, cover, tags } = Astro.props;
       display: block;
       bottom: 50%;
       color: var(--color-ink);
+    }
+
+    .project-card:has(.project-cover:hover) .project-card-title::after {
+      content: none;
     }
   }
 </style>
