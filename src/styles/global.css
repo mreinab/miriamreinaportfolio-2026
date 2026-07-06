@@ -110,6 +110,15 @@ article img.is-loaded {
   }
 }
 
+/* Solo /webdev (ver clase project-list-webdev en webdev.astro): en mobile
+   el cover pasa de proporción natural a un alto fijo de 45dvh, recortado
+   (object-fit: cover en ProjectCard.astro) y anclado a la derecha. */
+@media (max-width: 767px) {
+  .project-list-webdev {
+    --project-cover-mobile-height: 45dvh;
+  }
+}
+
 /* Cover de la página de detalle de un proyecto individual
    (fashion/webdev/graphicdesign [slug].astro). */
 .project-cover-hero {

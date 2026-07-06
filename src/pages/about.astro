@@ -4,8 +4,9 @@ import SitePage from '../components/SitePage.astro';
 ---
 
 <Layout title="About" chrome={false} fonts={true}>
-  <SitePage>
-    <div class="flex h-dvh flex-col justify-center align-center gap-2">
+  <SitePage invertNav>
+    <img src="/images/about/about-miriam.gif" alt="" class="about-mimi" />
+    <div class="flex h-dvh flex-col justify-center align-center gap-2 p-2">
       <h1 class="project-summary hidden">About</h1>
       <p class="text-caption">
         I thrive on transforming ideas into experiences that resonate and inspire, exploring the intersection between web development, fashion and graphic design. Fast learner and passionate about how new technologies enhance creativity.
@@ -19,3 +20,14 @@ import SitePage from '../components/SitePage.astro';
     </div>
   </SitePage>
 </Layout>
+
+<style>
+  .about-mimi {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 110px;
+    width: auto;
+  }
+
+</style>

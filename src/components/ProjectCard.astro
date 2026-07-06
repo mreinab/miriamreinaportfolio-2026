@@ -42,7 +42,16 @@ const { collection, slug, title, cover, tags } = Astro.props;
 
   .project-cover {
     width: 100%;
-    height: auto;
+    /* Por defecto auto (proporción natural). En mobile, .project-list-webdev
+       (solo /webdev, ver global.css) fija esta variable a 45dvh para recortar
+       la imagen a un alto fijo. */
+    height: var(--project-cover-mobile-height, auto);
+    object-fit: cover;
+    /* Con height auto (caso por defecto) el box ya coincide con la
+       proporción natural de la imagen, así que object-fit no recorta nada;
+       solo entra en juego cuando --project-cover-mobile-height fija un
+       alto que no coincide con esa proporción. */
+    object-position: right center;
     display: block;
   }
 

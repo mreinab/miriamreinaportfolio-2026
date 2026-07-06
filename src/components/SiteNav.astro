@@ -2,16 +2,17 @@
 // src/components/SiteNav.astro
 interface Props {
   active?: 'graphicdesign' | 'fashion' | 'webdev';
+  invert?: boolean;
 }
 
-const { active } = Astro.props;
+const { active, invert = false } = Astro.props;
 ---
-<nav class="site-nav" aria-label="Navegación principal">
+<nav class={`site-nav ${invert ? 'site-nav--invert' : ''}`} aria-label="Navegación principal">
   <svg class="site-nav-outer" aria-hidden="true">
     <ellipse />
   </svg>
 
-  <a class="site-nav-link site-nav-link--top" href="/about">Miriam</a>
+  <a class="site-nav-link site-nav-link--top" href="/">Home</a>
 
   <div class="site-nav-venn">
     <svg class="site-nav-venn-circle site-nav-venn-circle--left" aria-hidden="true">
@@ -53,7 +54,7 @@ const { active } = Astro.props;
     </a>
   </div>
 
-  <a class="site-nav-link site-nav-link--bottom" href="/">Home</a>
+  <a class="site-nav-link site-nav-link--bottom" href="/about">About Miriam</a>
 </nav>
 
 <style>
@@ -277,6 +278,19 @@ const { active } = Astro.props;
   .site-nav-venn-link[aria-current='page'],
   .site-nav-link[aria-current='page'] {
     text-decoration: none;
+  }
+
+  /* Variante para páginas con fondo claro (p.ej. /about): mismo nav, en negro */
+  .site-nav--invert,
+  .site-nav--invert .site-nav-link,
+  .site-nav--invert .site-nav-venn-link {
+    color: var(--color-ink);
+  }
+
+  .site-nav--invert .site-nav-outer ellipse,
+  .site-nav--invert .site-nav-venn-circle ellipse,
+  .site-nav--invert .site-nav-venn-link-outline ellipse {
+    stroke: var(--color-ink);
   }
 </style>
 

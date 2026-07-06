@@ -8,11 +8,12 @@ import DesktopSideNav from './DesktopSideNav.astro';
 
 interface Props {
   active?: 'graphicdesign' | 'fashion' | 'webdev';
+  invertNav?: boolean;
 }
 
-const { active } = Astro.props;
+const { active, invertNav = false } = Astro.props;
 ---
-<SiteNav active={active} />
+<SiteNav active={active} invert={invertNav} />
 <DesktopSideNav active={active} />
 <div class="site-page-content">
   <slot />
@@ -21,6 +22,7 @@ const { active } = Astro.props;
 <style>
 
   .site-page-content {
+    position: relative;
     background-color: var(--color-paper) !important;
   }
 
