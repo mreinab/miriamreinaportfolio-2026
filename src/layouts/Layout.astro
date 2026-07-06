@@ -3,12 +3,11 @@ import '../styles/global.css';
 
 interface Props {
   title?: string;
-  chrome?: boolean;
   fonts?: boolean;
   favicon?: string;
 }
 
-const { title = 'Portfolio', chrome = true, fonts = false, favicon = '/favicon.png' } = Astro.props;
+const { title = 'Portfolio', fonts = false, favicon = '/favicon.png' } = Astro.props;
 ---
 
 <!doctype html>
@@ -32,32 +31,9 @@ const { title = 'Portfolio', chrome = true, fonts = false, favicon = '/favicon.p
     }
   </head>
   <body>
-    {
-      chrome && (
-        <header>
-          <nav>
-            <ul>
-              <li><a href="/">Inicio</a></li>
-              <li><a href="/graphicdesign">Diseño</a></li>
-              <li><a href="/fashion">Moda</a></li>
-              <li><a href="/webdev">Desarrollo</a></li>
-            </ul>
-          </nav>
-        </header>
-      )
-    }
-
     <main>
       <slot />
     </main>
-
-    {
-      chrome && (
-        <footer>
-          <p>&copy; {new Date().getFullYear()} Portfolio</p>
-        </footer>
-      )
-    }
   </body>
 </html>
 

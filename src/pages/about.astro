@@ -3,9 +3,16 @@ import Layout from '../layouts/Layout.astro';
 import SitePage from '../components/SitePage.astro';
 ---
 
-<Layout title="About" chrome={false} fonts={true}>
+<Layout title="About" fonts={true}>
   <SitePage invertNav>
-    <img src="/images/about/about-miriam.gif" alt="" class="about-mimi" />
+    <img
+      src="/images/about/about-miriam.gif"
+      alt=""
+      width="350"
+      height="267"
+      fetchpriority="high"
+      class="about-mimi"
+    />
     <div class="flex h-dvh flex-col justify-center align-center gap-2 p-2">
       <h1 class="project-summary hidden">About</h1>
       <p class="text-caption">

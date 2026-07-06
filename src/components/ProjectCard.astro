@@ -13,7 +13,7 @@ const { collection, slug, title, cover, tags } = Astro.props;
 <article class="relative flex bg-paper project-card">
   <p class="project-card-title text-caption">{title}</p>
   <a class="w-full flex justify-end" href={`/${collection}/${slug}`}>
-    <img class="project-cover" src={cover} alt={title} />
+    <img class="project-cover" src={cover} alt={title} loading="lazy" decoding="async" />
   </a>
   <!-- <ul>
     {tags.map((tag: string) => <li>{tag}</li>)}

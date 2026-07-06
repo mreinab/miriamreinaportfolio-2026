@@ -6,16 +6,14 @@ const year = new Date().getFullYear();
 const email = 'm.reinabolanos@gmail.com'; 
 ---
 
-<Layout title="Portfolio" chrome={false} fonts={true}>
+<Layout title="Portfolio" fonts={true}>
   <img
     src="/images/index/mery-cover-index.gif"
     alt=""
-    class="landing-bg fixed inset-0 -z-10 hidden h-full w-full object-cover md:block"
-  />
-  <img
-    src="/images/index/mery-cover-index.gif"
-    alt=""
-    class="landing-bg fixed inset-0 -z-10 block h-full w-full object-cover md:hidden"
+    width="800"
+    height="600"
+    fetchpriority="high"
+    class="landing-bg fixed inset-0 -z-10 h-full w-full object-cover"
   />
 
   <div class="landing flex h-dvh w-dvw flex-col justify-between text-paper text-micro">
