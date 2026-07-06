@@ -111,11 +111,11 @@ article img.is-loaded {
 }
 
 /* Solo /webdev (ver clase project-list-webdev en webdev.astro): en mobile
-   el cover pasa de proporción natural a un alto fijo de 45dvh, recortado
+   el cover pasa de proporción natural a un alto fijo de 52dvh, recortado
    (object-fit: cover en ProjectCard.astro) y anclado a la derecha. */
 @media (max-width: 767px) {
   .project-list-webdev {
-    --project-cover-mobile-height: 45dvh;
+    --project-cover-mobile-height: 52dvh;
   }
 }
 
@@ -143,6 +143,7 @@ article img.is-loaded {
   font-size: var(--text-caption);
   color: var(--color-blue-electric);
   padding-top: 0.25rem;
+  padding-left: 0.25rem;
 }
 
 /* Lista de `tags` del frontmatter, en las páginas de detalle de proyecto. */
